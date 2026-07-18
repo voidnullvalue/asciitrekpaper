@@ -30,7 +30,10 @@ jobs:
       - name: Install Android platform and NDK
         shell: bash
         run: |
-          yes | sdkmanager --licenses >/dev/null
+          # GitHub invokes bash with pipefail. `yes` is expected to receive
+          # SIGPIPE after sdkmanager has consumed the final prompt, so do not
+          # let that expected exit code abort the build.
+          yes | sdkmanager --licenses >/dev/null || true
           sdkmanager \
             "platforms;android-36" \
             "build-tools;36.0.0" \
