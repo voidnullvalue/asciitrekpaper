@@ -83,14 +83,15 @@ for abi in "${abis[@]}"; do
             --sysroot="$toolchain/sysroot" \
             --prefix=/usr \
             --with-libs=dl,m \
-            -Dusethreads \
-            -Dusemultiplicity \
-            -Duse64bitint \
-            -Uuseshrplib \
-            -Dccflags="-fPIC" \
-            -Dcccdlflags="-fPIC" \
-            -Dlddlflags="-shared" \
-            -Dman1dir=none -Dman3dir=none
+            --use-threads \
+            --use-multiplicity \
+            --use-64bitint \
+            --set-d-fork=define \
+            --dont-use-shrplib \
+            --set-ccflags=-fPIC \
+            --set-cccdlflags=-fPIC \
+            --set-lddlflags=-shared \
+            --man1dir=none --man3dir=none
 
         make -j"${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 2)}"
         make DESTDIR="$stage" install
