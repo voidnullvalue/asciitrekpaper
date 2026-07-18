@@ -15,6 +15,8 @@ set_target_properties(embedded_perl PROPERTIES IMPORTED_LOCATION "${PERL_ARCHIVE
 
 add_library(asciitrekpaper SHARED asciitrek_jni.c)
 target_include_directories(asciitrekpaper PRIVATE "${PERL_INCLUDE}")
-target_compile_definitions(asciitrekpaper PRIVATE PERL_NO_GET_CONTEXT=1)
+target_compile_definitions(asciitrekpaper PRIVATE
+    NO_LOCALE
+    PERL_NO_GET_CONTEXT=1)
 target_compile_options(asciitrekpaper PRIVATE -Wall -Wextra -fvisibility=hidden)
 target_link_libraries(asciitrekpaper PRIVATE embedded_perl log android m dl)

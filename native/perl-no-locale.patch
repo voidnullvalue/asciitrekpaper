@@ -1,0 +1,5 @@
+--- a/locale.c
++++ b/locale.c
+@@ -7775 +7775 @@
+-#ifndef HAS_DEFINITIVE_UTF8NESS_DETERMINATION
++#if ! defined(HAS_DEFINITIVE_UTF8NESS_DETERMINATION) && defined(USE_LOCALE_CTYPE)

@@ -70,6 +70,7 @@ for abi in "${abis[@]}"; do
     mkdir -p "$source_dir" "$stage" "$destination/lib" "$destination/include/perl"
     tar -xzf "$perl_archive" --strip-components=1 -C "$source_dir"
     tar -xzf "$cross_archive" --strip-components=1 -C "$source_dir"
+    patch -d "$source_dir" -p1 < "$project_root/native/perl-no-locale.patch"
 
     cc="$toolchain/bin/${clang_prefix}${android_api}-clang"
     (
@@ -95,17 +96,19 @@ for abi in "${abis[@]}"; do
             --set-d-duplocale=undef \
             --set-d-freelocale=undef \
             --dont-use-shrplib \
-            --set-ccflags=-fPIC \
+            --set-ccflags="-fPIC -DNO_LOCALE" \
             --set-cccdlflags=-fPIC \
             --set-lddlflags=-shared \
             --man1dir=none --man3dir=none
 
-        make -j"${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 2)}"
-        make DESTDIR="$stage" install
+        # The wallpaper embeds only the interpreter core. Building `all` also
+        # configures dynamic extensions that cannot be executed while cross-
+        # compiling (for example Time::HiRes) and are not shipped in the APK.
+        make -j"${JOBS:-$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 2)}" libperl.a
     )
 
-    libperl="$(find "$source_dir" "$stage" -name libperl.a -type f | head -n 1)"
-    core_dir="$(find "$source_dir" "$stage" -path '*/CORE/perl.h' -type f -printf '%h\n' | head -n 1)"
+    libperl="$source_dir/libperl.a"
+    core_dir="$source_dir"
     if [[ -z "$libperl" || -z "$core_dir" ]]; then
         echo "Could not locate built libperl.a or CORE headers for $abi" >&2
         exit 1
