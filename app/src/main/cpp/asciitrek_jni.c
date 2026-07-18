@@ -34,6 +34,7 @@ static void throw_illegal_state(JNIEnv *env, const char *message) {
 }
 
 static int perl_failed(JNIEnv *env, const char *operation) {
+    dTHX;
     if (!SvTRUE(ERRSV)) return 0;
     STRLEN length = 0;
     const char *error = SvPV(ERRSV, length);
@@ -74,6 +75,7 @@ Java_com_voidnullvalue_asciitrekpaper_NativeAsciitrek_create(
     }
 
     PERL_SET_CONTEXT(context->perl);
+    dTHX;
     perl_construct(context->perl);
     PL_exit_flags |= PERL_EXIT_DESTRUCT_END;
 
@@ -140,6 +142,7 @@ Java_com_voidnullvalue_asciitrekpaper_NativeAsciitrek_resize(
     TrekContext *context = context_from(handle);
     if (context == NULL) return;
     PERL_SET_CONTEXT(context->perl);
+    dTHX;
     dSP;
     ENTER;
     SAVETMPS;
@@ -163,6 +166,7 @@ Java_com_voidnullvalue_asciitrekpaper_NativeAsciitrek_tick(
     TrekContext *context = context_from(handle);
     if (context == NULL) return NULL;
     PERL_SET_CONTEXT(context->perl);
+    dTHX;
     dSP;
     ENTER;
     SAVETMPS;
@@ -199,6 +203,7 @@ Java_com_voidnullvalue_asciitrekpaper_NativeAsciitrek_destroy(
     TrekContext *context = context_from(handle);
     if (context == NULL) return;
     PERL_SET_CONTEXT(context->perl);
+    dTHX;
     SvREFCNT_dec(context->engine);
     PL_perl_destruct_level = 1;
     perl_destruct(context->perl);
