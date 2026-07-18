@@ -1,0 +1,3 @@
+*.pm -whitespace
+*.pl -whitespace
+*.t -whitespace

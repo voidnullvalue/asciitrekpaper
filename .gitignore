@@ -1,0 +1,11 @@
+.gradle/
+.idea/
+local.properties
+**/build/
+native/build/
+native/downloads/
+native/perl/
+app/src/main/assets/perl/lib/
+*.iml
+*.jks
+*.keystore

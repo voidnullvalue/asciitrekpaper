@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Asciitrekpaper</string>
+    <string name="wallpaper_name">Asciitrek</string>
+    <string name="wallpaper_description">A faithful, adaptive Asciitrek live wallpaper powered by embedded Perl.</string>
+    <string name="set_wallpaper">Set live wallpaper</string>
+    <string name="glyph_size">ASCII glyph size</string>
+    <string name="glyph_size_value">%1$d dp</string>
+    <string name="about_text">The original Asciitrek simulation and ASCII artwork, rendered as an Android live wallpaper. GPL-2.0-or-later.</string>
+</resources>
