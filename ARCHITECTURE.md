@@ -27,7 +27,7 @@ deprecated display API assumptions.
 
 ## Embedded Perl
 
-`native/build_perl_android.sh` overlays perl-cross on Perl 5.40.2 and builds a
+`native/build_perl_android.sh` overlays perl-cross on Perl 5.40.1 and builds a
 position-independent static `libperl.a` for every configured ABI. CMake links
 that archive into the app's JNI library. The build also bundles only the pure
 core pragmas needed to load `Asciitrek::Engine`; no Curses or CPAN runtime is

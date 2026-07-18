@@ -7,7 +7,9 @@ build_root="$project_root/native/build"
 output_root="$project_root/native/perl"
 asset_lib="$project_root/app/src/main/assets/perl/lib"
 
-perl_version="${PERL_VERSION:-5.40.2}"
+# perl-cross patchsets are keyed to exact upstream point releases. 1.6.2
+# ships the Android-capable 5.40.1 patchset, so keep the default pinned to it.
+perl_version="${PERL_VERSION:-5.40.1}"
 perl_cross_version="${PERL_CROSS_VERSION:-1.6.2}"
 android_api="${ANDROID_API:-23}"
 ndk="${ANDROID_NDK_HOME:-${ANDROID_NDK_ROOT:-}}"
