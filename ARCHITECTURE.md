@@ -37,6 +37,11 @@ Perl assets are copied from the APK to `noBackupFilesDir`, since Perl module
 loading requires filesystem paths. No executable code is downloaded at
 runtime.
 
+The embedded interpreter is pinned to the deterministic C locale. The scene
+engine does not perform locale-sensitive parsing or formatting, and Android's
+partial POSIX locale surface otherwise produces inconsistent perl-cross
+feature guards.
+
 ## Lifecycle and power
 
 Rendering begins only when both the wallpaper is visible and its Surface is

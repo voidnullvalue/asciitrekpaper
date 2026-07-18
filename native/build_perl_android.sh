@@ -89,6 +89,11 @@ for abi in "${abis[@]}"; do
             --set-d-fork=define \
             --set-d-pipe=define \
             --set-d-pipe2=define \
+            --set-d-setlocale=undef \
+            --set-d-newlocale=undef \
+            --set-d-uselocale=undef \
+            --set-d-duplocale=undef \
+            --set-d-freelocale=undef \
             --dont-use-shrplib \
             --set-ccflags=-fPIC \
             --set-cccdlflags=-fPIC \
