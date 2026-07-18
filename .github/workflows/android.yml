@@ -66,11 +66,11 @@ jobs:
           status=${PIPESTATUS[0]}
           set -e
           if [[ $status -ne 0 ]]; then
-            tail -n 40 native/perl-build.log | while IFS= read -r line; do
-              line=${line//'%'/'%25'}
-              line=${line//$'\r'/'%0D'}
-              echo "::error title=Embedded Perl build::$line"
-            done
+            diagnostic=$(tail -n 80 native/perl-build.log)
+            diagnostic=${diagnostic//'%'/'%25'}
+            diagnostic=${diagnostic//$'\r'/'%0D'}
+            diagnostic=${diagnostic//$'\n'/'%0A'}
+            echo "::error title=Embedded Perl build::$diagnostic"
             exit "$status"
           fi
 
