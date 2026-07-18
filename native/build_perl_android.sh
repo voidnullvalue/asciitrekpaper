@@ -19,14 +19,20 @@ if [[ -z "$ndk" || ! -d "$ndk/toolchains/llvm/prebuilt" ]]; then
     exit 2
 fi
 
-host_tag=""
-case "$(uname -s)-$(uname -m)" in
-    Linux-x86_64) host_tag="linux-x86_64" ;;
-    Darwin-x86_64) host_tag="darwin-x86_64" ;;
-    Darwin-arm64) host_tag="darwin-x86_64" ;;
-    *) echo "Unsupported build host: $(uname -s)-$(uname -m)" >&2; exit 2 ;;
-esac
+host_tag="${ANDROID_NDK_HOST_TAG:-}"
+if [[ -z "$host_tag" ]]; then
+    case "$(uname -s)-$(uname -m)" in
+        Linux-x86_64) host_tag="linux-x86_64" ;;
+        Darwin-x86_64) host_tag="darwin-x86_64" ;;
+        Darwin-arm64) host_tag="darwin-x86_64" ;;
+        *) echo "Unsupported build host: $(uname -s)-$(uname -m)" >&2; exit 2 ;;
+    esac
+fi
 toolchain="$ndk/toolchains/llvm/prebuilt/$host_tag"
+if [[ ! -d "$toolchain" ]]; then
+    echo "Android NDK host toolchain is missing: $host_tag" >&2
+    exit 2
+fi
 
 mkdir -p "$downloads" "$build_root" "$output_root" "$asset_lib/warnings"
 perl_archive="$downloads/perl-$perl_version.tar.gz"
