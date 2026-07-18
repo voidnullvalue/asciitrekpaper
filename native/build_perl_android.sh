@@ -76,6 +76,7 @@ for abi in "${abis[@]}"; do
         cd "$source_dir"
         ./configure \
             --target="$target" \
+            --target-tools-prefix="$toolchain/bin/llvm-" \
             --with-cc="$cc" \
             --with-ranlib="$toolchain/bin/llvm-ranlib" \
             --with-objdump="$toolchain/bin/llvm-objdump" \
