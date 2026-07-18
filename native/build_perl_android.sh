@@ -87,6 +87,8 @@ for abi in "${abis[@]}"; do
             --use-multiplicity \
             --use-64bitint \
             --set-d-fork=define \
+            --set-d-pipe=define \
+            --set-d-pipe2=define \
             --dont-use-shrplib \
             --set-ccflags=-fPIC \
             --set-cccdlflags=-fPIC \
