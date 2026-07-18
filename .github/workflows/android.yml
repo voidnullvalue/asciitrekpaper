@@ -66,7 +66,12 @@ jobs:
           status=${PIPESTATUS[0]}
           set -e
           if [[ $status -ne 0 ]]; then
-            diagnostic=$(tail -n 80 native/perl-build.log)
+            matches=$(grep -E \
+              'error:|undefined reference|No rule to make target|make(\[[0-9]+\])?: \*\*\*' \
+              native/perl-build.log || true)
+            diagnostic="$matches
+          --- final 40 lines ---
+          $(tail -n 40 native/perl-build.log)"
             diagnostic=${diagnostic//'%'/'%25'}
             diagnostic=${diagnostic//$'\r'/'%0D'}
             diagnostic=${diagnostic//$'\n'/'%0A'}
