@@ -124,9 +124,14 @@ jobs:
       - name: Create release or replace its debug APK
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
           TAG: ${{ github.ref_name }}
         shell: bash
         run: |
+          # This job has no actions/checkout step (it only needs the
+          # downloaded artifact), so its working directory isn't a git repo
+          # and gh can't auto-detect the target repository. GH_REPO tells it
+          # explicitly.
           if gh release view "$TAG" >/dev/null 2>&1; then
             gh release upload "$TAG" dist/*.apk --clobber
           else
