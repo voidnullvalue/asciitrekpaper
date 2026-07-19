@@ -1,5 +1,21 @@
 --- a/locale.c
 +++ b/locale.c
-@@ -7775 +7775 @@
+@@ -4712,7 +4712,8 @@
+ }
+
+ #endif
+-#if defined(USE_LOCALE) || defined(HAS_SOME_LANGINFO) || defined(HAS_LOCALECONV)
++#if 1  /* Always compiled: bodies below already degrade to trivial
++        * non-UTF-8 results when USE_LOCALE is undefined. */
+
+ STATIC utf8ness_t
+ S_get_locale_string_utf8ness_i(pTHX_ const char * string,
+@@ -7769,7 +7770,7 @@
+ }
+
+ #endif      /* Needs emulate_langinfo() */
 -#ifndef HAS_DEFINITIVE_UTF8NESS_DETERMINATION
 +#if ! defined(HAS_DEFINITIVE_UTF8NESS_DETERMINATION) && defined(USE_LOCALE_CTYPE)
+
+ STATIC bool
+ S_maybe_override_codeset(pTHX_ const char * codeset,
