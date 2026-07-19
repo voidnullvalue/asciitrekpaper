@@ -125,7 +125,8 @@ for abi in "${abis[@]}"; do
 done
 
 # These pure-core pragmas are required while loading Asciitrek::Engine.
-if [[ ! -f "$asset_lib/strict.pm" || ! -f "$asset_lib/warnings.pm" ]]; then
+if [[ ! -f "$asset_lib/strict.pm" || ! -f "$asset_lib/warnings.pm" \
+        || ! -f "$asset_lib/constant.pm" ]]; then
     if [[ -z "$built_source" ]]; then
         echo "Cached Perl core pragmas are missing" >&2
         exit 1
@@ -133,6 +134,9 @@ if [[ ! -f "$asset_lib/strict.pm" || ! -f "$asset_lib/warnings.pm" ]]; then
     cp "$built_source/lib/strict.pm" "$asset_lib/strict.pm"
     cp "$built_source/lib/warnings.pm" "$asset_lib/warnings.pm"
     cp "$built_source/lib/warnings/register.pm" "$asset_lib/warnings/register.pm"
+    # constant.pm is a dual-life module; `make libperl.a` doesn't populate it
+    # into lib/ the way it does for strict/warnings, so pull it from dist/.
+    cp "$built_source/dist/constant/lib/constant.pm" "$asset_lib/constant.pm"
 fi
 
 echo "Embedded Perl $perl_version built for: ${abis[*]}"

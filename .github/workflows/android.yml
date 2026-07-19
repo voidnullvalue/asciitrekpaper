@@ -87,6 +87,9 @@ jobs:
           path: native/perl-build.log
           if-no-files-found: ignore
 
+      - name: Test bundled Perl assets load with a device-like @INC
+        run: prove -v t/embedded-assets.t
+
       - name: Build debug APK
         run: gradle --no-daemon :app:assembleDebug
 
